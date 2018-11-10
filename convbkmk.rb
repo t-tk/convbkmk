@@ -3,7 +3,7 @@
 
 =begin
 
-convbkmk Ver.0.02
+convbkmk Ver.0.03
 
 = License
 
@@ -35,10 +35,12 @@ THE SOFTWARE.
 2011.05.02   0.01  Bug fix: BOM was not correct.
 2012.05.08   0.02  Bug fix: for a case of dvips with -z option and Ruby1.8.
                    Add conversion of /Creator and /Producer .
+2012.05.09   0.03  Suppress halfwidth -> fullwidth katakana conversion
+                   and MIME decoding in Ruby1.8.
 
 =end
 
-Version = "0.02"
+Version = "0.03"
 
 require "optparse"
 
@@ -54,10 +56,10 @@ else
   $RUBY_M17N = false
 
   require "jcode" # for method each_char
-  require "kconv"
+  require "nkf"
   class String
     def to_utf16be(enc)
-      self.kconv(Kconv::UTF16, enc.kconv_enc)
+      NKF.nkf('-w16 -x -m0 '+enc.kconv_enc, self)
     end
     def ascii_only?
       return self !~ /[\x80-\xFF]/n
@@ -91,9 +93,9 @@ class TeXEncoding
     @list = ['Shift_JIS', 'EUC-JP', 'UTF-8']
     if !$RUBY_M17N
       @kconv_enc = nil
-      @kconv_list = {'Shift_JIS' => Kconv::SJIS,
-                     'EUC-JP' => Kconv::EUC,
-                     'UTF-8' => Kconv::UTF8}
+      @kconv_list = {'Shift_JIS' => '--sjis-input',
+                     'EUC-JP' => '--euc-input',
+                     'UTF-8' => '--utf8-input'}
     end
   end
 
