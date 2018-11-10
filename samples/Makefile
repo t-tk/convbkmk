@@ -8,6 +8,10 @@ PS2PDF = ps2pdf
 CONVBKMKRB = ../convbkmk.rb
 CONVBKMK   = $(CONVBKMKRB)
 
+all: dvips dvipdfmx
+dvips: platex_dvips uplatex_dvips
+dvipdfmx: platex_dvipdfmx uplatex_dvipdfmx
+
 platex_dvips:
 	cp bkmk-dpps.tex bkmk-p-dpps.tex
 	$(PLATEX) bkmk-p-dpps.tex
