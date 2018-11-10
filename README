@@ -1,6 +1,6 @@
-convbkmk Ver.0.08
+convbkmk Ver.0.09
 
-2013.05.11
+2014.03.02
 Takuji Tanaka
 KXD02663 (at) nifty.ne.jp
 http://homepage3.nifty.com/ttk/comp/tex/uptex_en.html
@@ -15,5 +15,9 @@ the data is written in a certain syntax with UTF-16 or PDFDocEncoding.
 Thus, data conversion is required to create correct bookmarks.
 convbkmk provides a function of
 the encoding conversion and formatting the bookmark data.
+
+Lisence notice is written in the convbkmk.rb.
+It is as same as the MIT license.
+Ref. http://opensource.org/licenses/MIT
 
 More information is within the convbkmk.rb with the RD format.
