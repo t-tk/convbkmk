@@ -3,13 +3,13 @@
 
 =begin
 
-convbkmk Ver.0.01
+convbkmk Ver.0.02
 
 = License
 
 convbkmk
 
-Copyright (c) 2009-2011 Takuji Tanaka
+Copyright (c) 2009-2012 Takuji Tanaka
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +33,12 @@ THE SOFTWARE.
 
 2009.08.02   0.00  Initial version.
 2011.05.02   0.01  Bug fix: BOM was not correct.
+2012.05.08   0.02  Bug fix: for a case of dvips with -z option and Ruby1.8.
+                   Add conversion of /Creator and /Producer .
 
 =end
 
-Version = "0.01"
+Version = "0.02"
 
 require "optparse"
 
@@ -64,7 +66,8 @@ else
       tmp = "\"" + self + "\""
       tmp.gsub!("\\(","\\\\\\(")
       tmp.gsub!("\\)","\\\\\\)")
-      tmp.gsub!("\n","\\n").gsub!("\r","\\r")
+      tmp.gsub!("\n","\\n")
+      tmp.gsub!("\r","\\r")
       return tmp == self.inspect
     end
     def force_encoding(enc)
@@ -290,7 +293,7 @@ def file_treatment(ifile, ofile, enc)
   while l = ifile.gets do
     line.force_encoding('ASCII-8BIT') if $RUBY_M17N
     line += l
-    if (line !~ %r!(/Author|/Title|/Subject|/Keywords)! )
+    if (line !~ %r!(/Title|/Author|/Keywords|/Subject|/Creator|/Producer)(\s+\(|$)! )
       ofile.print line
       line = ''
       next
