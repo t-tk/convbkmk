@@ -1,0 +1,8 @@
+# Emacs
+*~
+
+*.dvi
+*.aux
+*.log
+
+*.html
