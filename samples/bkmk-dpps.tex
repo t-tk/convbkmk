@@ -1,0 +1,56 @@
+\documentclass[autodetect-engine]{jsarticle}
+
+\newif\ifuptexmode
+\makeatletter
+\if@jsc@uplatex
+ \uptexmodetrue
+\else
+ \uptexmodefalse
+\fi
+
+\usepackage[dvips]{hyperref}
+\hypersetup{%
+ bookmarksnumbered=true,%
+ colorlinks=true,%
+ setpagesize=false,%
+ pdftitle={いろいろ確かめてみる},%
+ pdfsubject={hyperref編},%
+ pdfauthor={名無 権兵衛},%
+ pdfkeywords={TeX; dvips; dvipdfmx; bookmark; hyperref; しおり; pdf}}
+
+\begin{document}
+\parindent0mm
+
+dviware: dvips
+
+\ifuptexmode
+engine: upLaTeX
+\typeout{### engine: upLaTeX ###}
+\else
+engine: pLaTeX
+\typeout{### engine: pLaTeX ###}
+\fi
+
+\section{αβγ}
+test test.
+
+\section{абв}
+test test.
+
+\section{セクション}
+test test.
+\subsection{サブセクション(括弧)}
+test test.
+
+\ifuptexmode
+
+\section{以下は、upLaTeXのみ}
+\subsection{いわゆる『JIS2004』: ♡〠☎☃♨①❷ⅳⅤⓐ㋑}
+便利な記号がいっぱい。
+
+\subsection{Extension B (BMP外)の文字: 𠘨𤴔𦥑𧾷𩙿など}
+𠘨𤴔𦥑𧾷𩙿
+
+\fi
+
+\end{document}
