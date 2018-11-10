@@ -3,13 +3,13 @@
 
 =begin
 
-convbkmk Ver.0.00
+convbkmk Ver.0.01
 
 = License
 
 convbkmk
 
-Copyright (c) 2009 Takuji Tanaka
+Copyright (c) 2009-2011 Takuji Tanaka
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,11 @@ THE SOFTWARE.
 = History
 
 2009.08.02   0.00  Initial version.
+2011.05.02   0.01  Bug fix: BOM was not correct.
 
 =end
 
-Version = "0.00"
+Version = "0.01"
 
 require "optparse"
 
@@ -204,7 +205,10 @@ def check_parentheses_balance(line, enc)
       p enc.option
       p enc.current
       p enc.is_8bit
-      p tmp_rest.inspect if !$RUBY_M17N
+      if !$RUBY_M17N
+        p tmp_rest.inspect
+        p tmp_rest
+      end
       p line
       raise 'encoding is not consistent'
     end
@@ -262,7 +266,7 @@ def conv_string_to_utf16be(line, enc)
     tmp = $'
   end
 
-  buf = 'FFFE' # BOM for UTF-16BE
+  buf = 'FEFF' # BOM for UTF-16BE
   conv.each_char { |chr|
     if chr == "\r" || chr == "\n"
       buf += chr
@@ -284,6 +288,7 @@ def file_treatment(ifile, ofile, enc)
 
   line = ''
   while l = ifile.gets do
+    line.force_encoding('ASCII-8BIT') if $RUBY_M17N
     line += l
     if (line !~ %r!(/Author|/Title|/Subject|/Keywords)! )
       ofile.print line
