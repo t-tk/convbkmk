@@ -25,8 +25,8 @@ the encoding conversion and formatting the bookmark data.
 
 == Requirement
 
-ruby 1.9.x or later
-ruby 1.8.x is not supported anymore.
+ruby 1.9.x or later is required.
+ruby 1.8.x is no longer supported.
 
 == Examples
 
@@ -59,6 +59,11 @@ uplatex + hyperref + dvipdfmx :
  $ dvipdfmx doc03.dvi
 
 More examples are included in the uptex source archive.
+
+== Repository
+
+convbkmk is maintained on GitHub:
+((<URL:https://github.com/t-tk/convbkmk>))
 
 == License
 

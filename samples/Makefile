@@ -64,3 +64,6 @@ clean:
 	rm -f *.out
 
 
+doc:
+	pandoc ../README.md -s -o README_convbkmk.html
+	rd2 ../convbkmk.rb > convbkmk.html
