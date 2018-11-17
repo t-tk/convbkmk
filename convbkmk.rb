@@ -262,6 +262,16 @@ def try_guess_encoding(line, enc)
   end
 end
 
+def os_legacy_encoding(enc)
+  return if enc.status != 'guess'
+  enc.is_8bit = true
+  if (RUBY_PLATFORM =~ /win/i && RUBY_PLATFORM !~ /darwin/i)
+    valid_enc = 'Shift_JIS'
+  else
+    valid_enc = 'EUC-JP'
+  end
+  enc.set_process_encoding(valid_enc)
+end
 
 def check_parentheses_balance(line, enc)
   depth = 0
@@ -393,6 +403,7 @@ def special_string_to_utf8(line, enc)
   conv = ''
   conv.force_encoding('UTF-8')
 
+  os_legacy_encoding(enc)
   str.force_encoding(enc.current)
   str = str.to_utf8(enc)
   bytes_new = str.bytesize
