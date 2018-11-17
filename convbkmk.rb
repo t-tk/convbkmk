@@ -374,23 +374,72 @@ def conv_string_to_utf16be(line, enc)
   return pre + buf + post
 end
 
+def special_string_to_utf8(line, enc)
+  if line.ascii_only? || line !~ /\Axxx[1-4]/mo
+    return line, 0
+  end
+
+  if line !~ /\Axxx(\d) (\d+) '(.*)'([^']*)\Z/mo
+    raise 'illegal input!'
+  end
+  xxx, bytes, str, trail = $1.to_i, $2.to_i, $3, $4
+  if str.bytesize != bytes
+    raise 'byte size is not consistent!'
+  end
+  if str !~ /\A(PS|ps)file=/mo
+    return line, 0
+  end
+
+  conv = ''
+  conv.force_encoding('UTF-8')
+
+  str.force_encoding(enc.current)
+  str = str.to_utf8(enc)
+  bytes_new = str.bytesize
+
+  xxx = bytes_new <= 0xff ? 1 : 4
+  conv = 'xxx' + xxx.to_s + ' ' + bytes_new.to_s + " '" + str + "'" + trail
+  return conv, bytes_new-bytes
+end
+
+def dvi_post_post(line, offset)
+  if line !~ /\Apost_post (\d+) ([23](?: 223){4,7}.*)\Z/mo
+    raise 'illegal input!'
+  end
+  bytes, trail = $1.to_i, $2
+  bytes += offset
+  line = 'post_post ' + bytes.to_s + ' ' + trail
+  return line
+end
 
 def file_treatment(ifile, ofile, enc)
   ifile.set_encoding('ASCII-8BIT')
   ofile.set_encoding('ASCII-8BIT')
 
-  line = ''
+  line, offset = '', 0
   while l = ifile.gets do
     line.force_encoding('ASCII-8BIT')
     line += l
     if    Opts[:mode] == :out then
       reg = %r!(\{)!
     elsif Opts[:mode] == :spc then
-      reg = %r!(^xxx[14])!
+      reg = %r!(\A(xxx|post_post))!
     else
       reg = %r!(/Title|/Author|/Keywords|/Subject|/Creator|/Producer)(\s+\(|$)!
     end
     if (line !~ reg )
+      ofile.print line
+      line = ''
+      next
+    end
+
+    if Opts[:mode] == :spc
+      if (line =~ /\Axxx/)
+        line, diff = special_string_to_utf8(line, enc)
+        offset += diff
+      else
+        line = dvi_post_post(line, offset)
+      end
       ofile.print line
       line = ''
       next
