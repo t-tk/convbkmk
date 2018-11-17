@@ -205,12 +205,18 @@ OptionParser.new do |opt|
   }
   opt.on('-o', '--out',
          'treat OUT files') {|v|
-    Opts[:mode] = 'out'
+    Opts[:mode] = :out
+    Opts[:overwrite] = true
+    require "fileutils"
+  }
+  opt.on('-d', '--dvi-special',
+         'treat specials in DVI files') {|v|
+    Opts[:mode] = :spc
     require "fileutils"
   }
   opt.on('-O', '--overwrite',
          'overwrite output files') {|v|
-    Opts[:mode] = 'overwrite'
+    Opts[:overwrite] = true
     require "fileutils"
   }
   opt.banner += " file0.ps [file1.ps ...]\n" \
@@ -224,9 +230,11 @@ end
 if enc.status == false
   enc.set_process_encoding('UTF-8')
 end
-if Opts[:mode] == 'out'
+if Opts[:mode] == :out
   OpenP, CloseP, OpenPEsc, ClosePEsc = '{', '}', '\{', '\}'
   FileSfx = 'out'
+elsif Opts[:mode] == :spc then
+  FileSfx = 'dvi|dvispc'
 else
   OpenP, CloseP, OpenPEsc, ClosePEsc = '(', ')', '\(', '\)'
   FileSfx = 'ps'
@@ -360,9 +368,9 @@ def conv_string_to_utf16be(line, enc)
   conv16be.force_encoding('UTF-16BE')
   conv16be += conv.utf8_to_utf16be # UTF-16BE with BOM
   conv16be.each_byte {|byte|
-    buf += (Opts[:mode] == 'out' ? '\%03o' : '%02X') % byte
+    buf += (Opts[:mode] == :out ? '\%03o' : '%02X') % byte
   }
-  buf = Opts[:mode] == 'out' ? '{' + buf + '}' : '<' + buf + '>'
+  buf = Opts[:mode] == :out ? '{' + buf + '}' : '<' + buf + '>'
   return pre + buf + post
 end
 
@@ -375,7 +383,13 @@ def file_treatment(ifile, ofile, enc)
   while l = ifile.gets do
     line.force_encoding('ASCII-8BIT')
     line += l
-    reg = Opts[:mode] == 'out' ? %r!(\{)! : %r!(/Title|/Author|/Keywords|/Subject|/Creator|/Producer)(\s+\(|$)!
+    if    Opts[:mode] == :out then
+      reg = %r!(\{)!
+    elsif Opts[:mode] == :spc then
+      reg = %r!(^xxx[14])!
+    else
+      reg = %r!(/Title|/Author|/Keywords|/Subject|/Creator|/Producer)(\s+\(|$)!
+    end
     if (line !~ reg )
       ofile.print line
       line = ''
@@ -385,7 +399,7 @@ def file_treatment(ifile, ofile, enc)
     ofile.print $`
     line = $& + $'
 
-    if Opts[:mode] != 'out'
+    if Opts[:mode] != :out
       while line =~ %r!(/Title|/Author|/Keywords|/Subject|/Creator|/Producer)\Z! do
         line += ifile.gets
       end
@@ -446,7 +460,7 @@ else
         file_treatment(ifile, ofile, enc)
       }
     }
-    if (Opts[:mode] == 'out' || Opts[:mode] == 'overwrite')
+    if (Opts[:overwrite])
       FileUtils.mv(fout, fin)
     end
   }
