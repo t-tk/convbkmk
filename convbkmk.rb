@@ -386,7 +386,7 @@ def special_string_to_utf8(line, enc)
   if str.bytesize != bytes
     raise 'byte size is not consistent!'
   end
-  if str !~ /\A(PS|ps)file=/mo
+  if str !~ /\A((PS|ps)file=|pdf:image |pdf:epdf )/mo
     return line, 0
   end
 
