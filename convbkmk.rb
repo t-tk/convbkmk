@@ -146,7 +146,7 @@ class String
 end
 
 class TeXEncoding
-  attr_accessor :current, :option, :status, :is_8bit, :kconv_enc
+  attr_accessor :current, :option, :status, :is_8bit
   attr_reader :list
 
   def initialize
@@ -447,7 +447,7 @@ else
       }
     }
     if (Opts[:mode] == 'out' || Opts[:mode] == 'overwrite')
-      FileUtils.mv(fout, fin) 
+      FileUtils.mv(fout, fin)
     end
   }
 end
