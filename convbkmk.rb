@@ -234,7 +234,7 @@ if Opts[:mode] == :out
   OpenP, CloseP, OpenPEsc, ClosePEsc = '{', '}', '\{', '\}'
   FileSfx = 'out'
 elsif Opts[:mode] == :spc then
-  FileSfx = 'dvi|dvispc'
+  FileSfx = '(dvi|dvispc)'
 else
   OpenP, CloseP, OpenPEsc, ClosePEsc = '(', ')', '\(', '\)'
   FileSfx = 'ps'
@@ -514,7 +514,17 @@ else
     if (fin !~ /\.#{FileSfx}$/io)
       raise 'input file does not seem ' + FileSfx.upcase + ' file'
     end
-    fout = fin.gsub(/\.#{FileSfx}$/io, "-convbkmk#{$&}")
+    sfx = $&
+    if (Opts[:mode] == :spc && fin =~ /\.dvi$/i)
+      dvi_conversion = true
+      fspc = fin.gsub(/\.dvi$/io, '.dvispc')
+      if !(system 'dvispc -a ' + fin + ' ' + fspc)
+        raise "fail to execute 'dvispc -a' command!"
+      end
+      fin = fspc
+      sfx = '.dvispc'
+    end
+    fout = fin.gsub(/#{sfx}$/i, "-convbkmk#{sfx}")
     open(fin, 'rb') {|ifile|
       open(fout, 'wb') {|ofile|
         file_treatment(ifile, ofile, enc)
@@ -522,6 +532,13 @@ else
     }
     if (Opts[:overwrite])
       FileUtils.mv(fout, fin)
+      fout = fin
+    end
+    if dvi_conversion
+      fdvi = fout.gsub(/\.dvispc$/o, '.dvi')
+      if !(system 'dvispc -x ' + fout + ' ' + fdvi)
+        raise "fail to execute 'dvispc -x' command!"
+      end
     end
   }
 end
