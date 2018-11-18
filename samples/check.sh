@@ -5,6 +5,8 @@
 
 testdir=./test
 convbkmk=../convbkmk.rb
+DVISPC=dvispc
+export DVISPC
 
 rc=0
 

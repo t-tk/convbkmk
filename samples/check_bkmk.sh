@@ -22,7 +22,11 @@ $convbkmk --enc=e bkmk-p-dpps-euc.ps && diff -q $testdir/bkmk-p-dpps-convbkmk.ps
 $convbkmk --enc=s bkmk-p-dpps-sjis.ps && diff -q $testdir/bkmk-p-dpps-convbkmk.ps bkmk-p-dpps-sjis-convbkmk.ps || rc=8
 $convbkmk --enc=u bkmk-up-dpps.ps && diff -q $testdir/bkmk-up-dpps-convbkmk.ps bkmk-up-dpps-convbkmk.ps || rc=9
 
-$convbkmk -O bkmk-up-dpps-ov.ps && diff -q $testdir/bkmk-up-dpps-convbkmk.ps bkmk-up-dpps-ov.ps || rc=10
+$convbkmk -e < bkmk-p-dpps-euc.ps > bkmk-p-dpps-euc-convbkmk.ps && diff -q $testdir/bkmk-p-dpps-convbkmk.ps bkmk-p-dpps-euc-convbkmk.ps || rc=10
+$convbkmk -s < bkmk-p-dpps-sjis.ps > bkmk-p-dpps-sjis-convbkmk.ps && diff -q $testdir/bkmk-p-dpps-convbkmk.ps bkmk-p-dpps-sjis-convbkmk.ps || rc=11
+$convbkmk -u < bkmk-up-dpps.ps > bkmk-up-dpps-convbkmk.ps && diff -q $testdir/bkmk-up-dpps-convbkmk.ps bkmk-up-dpps-convbkmk.ps || rc=12
+
+$convbkmk -O bkmk-up-dpps-ov.ps && diff -q $testdir/bkmk-up-dpps-convbkmk.ps bkmk-up-dpps-ov.ps || rc=13
 
 
 # with dvipdfmx

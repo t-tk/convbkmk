@@ -25,6 +25,15 @@ fi
 $convbkmk -edO fig-p-dpps-euc.dvispc && diff -q $testdir/fig-p-dpps-convbkmk.dvispc fig-p-dpps-euc.dvispc || rc=207
 $convbkmk -sdO fig-p-dpps-sjis.dvispc && diff -q $testdir/fig-p-dpps-convbkmk.dvispc fig-p-dpps-sjis.dvispc || rc=208
 
+$DVISPC -x fig-p-dpps-euc_bak.dvispc fig-p-dpps-euc_0.dvi
+$DVISPC -x fig-p-dpps-sjis_bak.dvispc fig-p-dpps-sjis_0.dvi
+$convbkmk -ed fig-p-dpps-euc_0.dvi && diff -q $testdir/fig-p-dpps-convbkmk.dvispc fig-p-dpps-euc_0-convbkmk.dvispc || rc=209
+$convbkmk -sd fig-p-dpps-sjis_0.dvi && diff -q $testdir/fig-p-dpps-convbkmk.dvispc fig-p-dpps-sjis_0-convbkmk.dvispc || rc=210
+
+$DVISPC -a fig-p-dpps-euc_0-convbkmk.dvi fig-p-dpps-euc_1-convbkmk.dvispc &&\
+$DVISPC -a fig-p-dpps-sjis_0-convbkmk.dvi fig-p-dpps-sjis_1-convbkmk.dvispc &&\
+diff -q fig-p-dpps-euc_1-convbkmk.dvispc fig-p-dpps-sjis_1-convbkmk.dvispc || rc=211
+
 # with dvipdfmx
 
 nkf -e $testdir/fig-p-dpdx.dvispc > fig-p-dpdx-euc.dvispc
@@ -46,4 +55,13 @@ fi
 
 $convbkmk -edO fig-p-dpdx-euc.dvispc && diff -q $testdir/fig-p-dpdx-convbkmk.dvispc fig-p-dpdx-euc.dvispc || rc=307
 $convbkmk -sdO fig-p-dpdx-sjis.dvispc && diff -q $testdir/fig-p-dpdx-convbkmk.dvispc fig-p-dpdx-sjis.dvispc || rc=308
+
+$DVISPC -x fig-p-dpdx-euc_bak.dvispc fig-p-dpdx-euc_0.dvi
+$DVISPC -x fig-p-dpdx-sjis_bak.dvispc fig-p-dpdx-sjis_0.dvi
+$convbkmk -ed fig-p-dpdx-euc_0.dvi && diff -q $testdir/fig-p-dpdx-convbkmk.dvispc fig-p-dpdx-euc_0-convbkmk.dvispc || rc=309
+$convbkmk -sd fig-p-dpdx-sjis_0.dvi && diff -q $testdir/fig-p-dpdx-convbkmk.dvispc fig-p-dpdx-sjis_0-convbkmk.dvispc || rc=310
+
+$DVISPC -a fig-p-dpdx-euc_0-convbkmk.dvi fig-p-dpdx-euc_1-convbkmk.dvispc &&\
+$DVISPC -a fig-p-dpdx-sjis_0-convbkmk.dvi fig-p-dpdx-sjis_1-convbkmk.dvispc &&\
+diff -q fig-p-dpdx-euc_1-convbkmk.dvispc fig-p-dpdx-sjis_1-convbkmk.dvispc || rc=311
 
