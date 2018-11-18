@@ -212,6 +212,7 @@ OptionParser.new do |opt|
   opt.on('-d', '--dvi-special',
          'treat specials in DVI files') {|v|
     Opts[:mode] = :spc
+    Dvispc = ENV["DVISPC"] ||= 'dvispc'
     require "fileutils"
   }
   opt.on('-O', '--overwrite',
@@ -518,7 +519,7 @@ else
     if (Opts[:mode] == :spc && fin =~ /\.dvi$/i)
       dvi_conversion = true
       fspc = fin.gsub(/\.dvi$/io, '.dvispc')
-      if !(system 'dvispc -a ' + fin + ' ' + fspc)
+      if !(system Dvispc + ' -a ' + fin + ' ' + fspc)
         raise "fail to execute 'dvispc -a' command!"
       end
       fin = fspc
@@ -536,7 +537,7 @@ else
     end
     if dvi_conversion
       fdvi = fout.gsub(/\.dvispc$/o, '.dvi')
-      if !(system 'dvispc -x ' + fout + ' ' + fdvi)
+      if !(system Dvispc + ' -x ' + fout + ' ' + fdvi)
         raise "fail to execute 'dvispc -x' command!"
       end
     end
