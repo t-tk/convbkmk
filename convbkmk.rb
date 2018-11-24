@@ -266,7 +266,7 @@ end
 def os_legacy_encoding(enc)
   return if enc.status != 'guess'
   enc.is_8bit = true
-  if (RUBY_PLATFORM =~ /win/i && RUBY_PLATFORM !~ /darwin/i)
+  if (RUBY_PLATFORM =~ /mswin|msys|mingw|cygwin|bccwin|wince|emc/i)
     valid_enc = 'Shift_JIS'
   else
     valid_enc = 'EUC-JP'
