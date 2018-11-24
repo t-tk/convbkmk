@@ -411,18 +411,20 @@ def special_string_to_utf8(line, enc)
   str = str.to_utf8(enc)
   bytes_new = str.bytesize
 
-  xxx = bytes_new <= 0xff ? 1 : 4
-  conv = 'xxx' + xxx.to_s + ' ' + bytes_new.to_s + " '" + str + "'" + trail
-  return conv, bytes_new-bytes
+  xxx_new = bytes_new <= 0xff ? 1 : 4
+  conv = 'xxx' + xxx_new.to_s + ' ' + bytes_new.to_s + " '" + str + "'" + trail
+  return conv, bytes_new - bytes + xxx_new - xxx
 end
 
 def dvi_post_post(line, offset)
-  if line !~ /\Apost_post (\d+) ([23](?: 223){4,7}.*)\Z/mo
+  if line !~ /\Apost_post (\d+) ([23])(?: 223){4,7}\Z/mo
     raise 'illegal input!'
   end
-  bytes, trail = $1.to_i, $2
+  bytes, id = $1.to_i, $2
+  padding = line.scan(' 223').count
   bytes += offset
-  line = 'post_post ' + bytes.to_s + ' ' + trail
+  padding = (padding - offset) % 4 + 4
+  line = 'post_post ' + bytes.to_s + ' ' + id + ' 223' * padding + "\n"
   return line
 end
 
