@@ -222,7 +222,9 @@ OptionParser.new do |opt|
   }
   opt.banner += " file0.ps [file1.ps ...]\n" \
     + opt.banner.sub('Usage:','      ') + " < in_file.ps > out_file.ps\n" \
-    + opt.banner.sub('Usage:','      ') + ' -o file0.out [file1.out ...]'
+    + opt.banner.sub('Usage:','      ') + " -o file0.out [file1.out ...]\n" \
+    + opt.banner.sub('Usage:','      ') + " -d file0.dvi [file1.dvi ...]\n" \
+    + opt.banner.sub('Usage:','      ') + " -d file0.dvispc [file1.dvispc ...]"
 
   opt.parse!
 end
