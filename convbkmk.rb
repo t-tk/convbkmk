@@ -3,9 +3,9 @@
 
 =begin
 
-= convbkmk Ver.0.20
+= convbkmk Ver.0.30
 
-  2018.11.11
+  2018.11.25
   Takuji Tanaka
   ttk (at) t-lab.opal.ne.jp
 ((<URL:http://www.t-lab.opal.ne.jp/tex/uptex_en.html>))
@@ -14,51 +14,83 @@
 == Abstract
 
 ((*convbkmk*)) is a tiny utility for making correct bookmarks in pdf files
-typesetted by platex/uplatex with the hyperref package.
-platex/uplatex + hyperref outputs data of bookmarks
+typesetted by pLaTeX/upLaTeX with the hyperref package.
+pLaTeX/upLaTeX + hyperref outputs data of bookmarks
 in their internal encodings (EUC-JP, Shift_JIS or UTF-8).
 On the other hand, the PostScript/PDF format requests that
 the data is written in a certain syntax with UTF-16 or PDFDocEncoding.
 Thus, data conversion is required to create correct bookmarks.
+
+In addition, pLaTeX outputs dvi files with special commands
+in its internal encoding (EUC-JP or Shift_JIS).
+It is not consistent with recent dviware and file systems
+which assume UTF-8.
+
 ((*convbkmk*)) provides a function of
-the encoding conversion and formatting the bookmark data.
+the encoding conversion and formatting the data.
 
 == Requirement
 
-ruby 1.9.x or later is required.
-ruby 1.8.x is no longer supported.
+((*ruby*)) 1.9.x or later is required.
+((*ruby*)) 1.8.x is no longer supported.
+To support conversion of dvi special,
+((*dvispc*)) in dviout-util is required.
 
 == Examples
 
-platex (internal kanji code: euc) + hyperref + dvips :
+=== for pdf bookmark
+
+pLaTeX (internal kanji code: euc) + hyperref + dvips :
  $ platex doc00.tex
  $ platex doc00.tex
  $ dvips doc00.dvi
  $ convbkmk.rb -e doc00.ps
  $ ps2pdf doc00-convbkmk.ps
 
-platex (kanji code: sjis) + hyperref + dvipdfmx :
+pLaTeX (kanji code: sjis) + hyperref + dvipdfmx :
  $ platex doc01.tex
  $ platex doc01.tex
  $ convbkmk.rb -s -o doc01.out
  $ platex doc01.tex
  $ dvipdfmx doc01.dvi
 
-uplatex + hyperref + dvips :
+upLaTeX + hyperref + dvips :
  $ uplatex doc02.tex
  $ uplatex doc02.tex
  $ dvips doc02.dvi
  $ convbkmk.rb doc02.ps
  $ ps2pdf doc02-convbkmk.ps
 
-uplatex + hyperref + dvipdfmx :
+upLaTeX + hyperref + dvipdfmx :
  $ uplatex doc03.tex
  $ uplatex doc03.tex
  $ convbkmk.rb -o doc03.out
  $ uplatex doc03.tex
  $ dvipdfmx doc03.dvi
 
-More examples are included in the uptex source archive.
+=== for dvi special (graphic file names)
+
+pLaTeX (internal kanji code: euc) + dvips :
+ $ platex doc04.tex
+ $ platex doc04.tex
+ $ convbkmk.rb -e -d doc04.dvi
+ $ dvips doc04-convbkmk.dvi
+ $ ps2pdf doc04-convbkmk.ps
+
+pLaTeX (internal kanji code: sjis) + dvipdfmx :
+ $ platex doc05.tex
+ $ platex doc05.tex
+ $ convbkmk.rb -s -d doc05.dvi
+ $ dvipdfmx doc05.dvi
+
+((*convbkmk*)) uses ((*dvispc*)) command
+to extract dvi files.
+((*dvispc*)) command is designated by
+an environmental variable 'DVISPC'.
+By default, 'dvispc' is set.
+
+More examples are provided at the GitHub repository
+and by the upTeX source archive.
 
 == Repository
 
@@ -122,10 +154,12 @@ THE SOFTWARE.
  * Update the author's mail address and web site.
 : 2018.11.11  0.20
  * Do not support Ruby1.8 anymore.
+: 2018.11.25  0.30
+ * Add -d option to support conversion of graphic file names in dvi special by pLaTeX.
 
 =end
 
-Version = "0.20"
+Version = "0.30"
 
 require "optparse"
 
