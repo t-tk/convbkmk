@@ -83,7 +83,7 @@ pLaTeX (internal kanji code: sjis) + dvipdfmx :
  $ convbkmk.rb -s -d doc05.dvi
  $ dvipdfmx doc05.dvi
 
-((*convbkmk*)) uses ((*dvispc*)) command
+((*convbkmk*)) executes ((*dvispc*)) command
 to extract dvi files.
 ((*dvispc*)) command is designated by
 an environmental variable 'DVISPC'.
