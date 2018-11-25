@@ -3,6 +3,7 @@ PLATEX = platex
 DVIPS = dvips
 DVIPDFMX = dvipdfmx
 PS2PDF = ps2pdf
+DVISPC = dvispc
 
 #CONVBKMKRB = /usr/bin/convbkmk
 CONVBKMKRB = ../convbkmk.rb
@@ -53,6 +54,40 @@ bkmk_docinfo: bkmk-docinfo.txt
 	cp bkmk-docinfo.out bkmk-docinfo_bak.out
 	$(CONVBKMK) -o bkmk-docinfo.out
 
+
+fig_platex_dvips:
+	cp fig-dpps.tex fig-p-dpps.tex
+	$(PLATEX) fig-p-dpps.tex
+	$(PLATEX) fig-p-dpps.tex
+	$(DVISPC) -a fig-p-dpps.dvi fig-p-dpps.dvispc
+	$(CONVBKMK) -d -g fig-p-dpps.dvispc
+	$(DVISPC) -x fig-p-dpps-convbkmk.dvispc fig-p-dpps-convbkmk.dvi
+	$(DVIPS) fig-p-dpps-convbkmk.dvi
+	$(PS2PDF) fig-p-dpps-convbkmk.ps
+
+fig_uplatex_dvips:
+	cp fig-dpps.tex fig-up-dpps.tex
+	$(UPLATEX) fig-up-dpps.tex
+	$(UPLATEX) fig-up-dpps.tex
+	$(DVIPS) fig-up-dpps.dvi
+	$(PS2PDF) fig-up-dpps.ps
+
+fig_platex_dvipdfmx:
+	cp fig-dpdx.tex fig-p-dpdx.tex
+	$(PLATEX) fig-p-dpdx.tex
+	$(PLATEX) fig-p-dpdx.tex
+	$(DVISPC) -a fig-p-dpdx.dvi fig-p-dpdx.dvispc
+	$(CONVBKMK) -d -g fig-p-dpdx.dvispc
+	$(DVISPC) -x fig-p-dpdx-convbkmk.dvispc fig-p-dpdx-convbkmk.dvi
+	$(DVIPDFMX) fig-p-dpdx-convbkmk.dvi
+
+fig_uplatex_dvipdfmx:
+	cp fig-dpdx.tex fig-up-dpdx.tex
+	$(UPLATEX) fig-up-dpdx.tex
+	$(UPLATEX) fig-up-dpdx.tex
+	$(DVIPDFMX) fig-up-dpdx.dvi
+
+
 test_samples:
 	nkf -e bkmk-p-dpps.ps > bkmk-p-dpps-euc.ps
 	nkf -s bkmk-p-dpps.ps > bkmk-p-dpps-sjis.ps
@@ -62,6 +97,8 @@ clean:
 	rm -f *.ps *.pdf
 	rm -f bkmk-p-dpps.tex bkmk-up-dpps.tex bkmk-p-dpdx.tex bkmk-up-dpdx.tex
 	rm -f *.out
+	rm -f fig-p-dpps.tex fig-up-dpps.tex fig-p-dpdx.tex fig-up-dpdx.tex
+	rm -f *.dvispc
 
 
 doc:

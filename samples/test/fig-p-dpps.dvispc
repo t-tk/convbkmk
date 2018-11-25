@@ -1,0 +1,198 @@
+pre 2 25400000 473628672 1000 27 ' TeX output 2018.11.17:1803'
+ [1]
+bop 1 0 0 0 0 0 0 0 0 0 -1
+xxx1 33 'papersize=597.50787pt,845.04684pt'
+down4 46252776
+push
+down4 -44631054
+down4 42766036
+push
+push
+push
+push
+down4 -40901018
+push
+right3 298780
+fntdef1 7 0x4BF16079 655360 655360 0 5 'cmr10'
+fntnum7
+setchar100
+setchar118
+setchar105
+setchar119
+ "dviw"
+right2 -18205
+setchar97
+setchar114
+setchar101
+setchar58
+ "are:"
+right3 291271
+setchar100
+setchar118
+setchar105
+setchar112
+setchar115
+ "dvips"
+pop
+y3 1048576
+push
+right3 298780
+setchar101
+setchar110
+setchar103
+setchar105
+setchar110
+setchar101
+setchar58
+ "engine:"
+right3 291271
+setchar112
+setchar76
+setchar97
+setchar84
+ "pLaT"
+right3 -54614
+setchar101
+setchar88
+ "eX"
+pop
+y0
+push
+right3 298780
+setchar105
+setchar110
+setchar110
+setchar101
+setchar114
+setchar45
+setchar99
+setchar111
+ "inner-co"
+right2 18205
+setchar100
+setchar101
+setchar58
+ "de:"
+right3 291271
+setchar69
+setchar85
+setchar67
+ "EUC"
+pop
+y0
+y0
+push
+right3 298780
+fntdef1 32 0 629800 655360 0 3 'jis'
+fntnum32
+set2 0x3f5e
+set2 0x244e
+set2 0x2546
+set2 0x2539
+set2 0x2548
+set2 0x2123
+pop
+y0
+push
+right3 298780
+fntnum7
+setchar103
+setchar111
+setchar48
+setchar48
+setchar48
+setchar46
+setchar101
+setchar112
+setchar115
+setchar58
+ "go000.eps:"
+pop
+z3 5786665
+push
+push
+right3 298780
+xxx1 63 'PSfile="figures/go000.eps" llx=0 lly=0 urx=600 ury=600 rwi=850 '
+pop
+pop
+y0
+push
+right3 298780
+setchar103
+setchar111
+setchar48
+setchar48
+setchar49
+ "go001"
+right3 163840
+fntnum32
+set2 0x304f
+set2 0x386b
+push
+right3 39320
+putrule 26214 196610
+pop
+w3 235930
+set2 0x375d
+set2 0x473d
+push
+right3 39320
+putrule 26214 196610
+pop
+w0
+set2 0x4d3d
+set2 0x446a
+set2 0x493d
+fntnum7
+setchar46
+setchar101
+setchar112
+setchar115
+setchar58
+ ".eps:"
+pop
+z0
+push
+push
+right3 298780
+xxx1 79 'PSfile="figures/go001∞œ∏Î_∑›«Ω_ÕΩƒÍ…Ω.eps" llx=0 lly=0 urx=600 ury=600 rwi=850 '
+pop
+pop
+y0
+push
+right3 298780
+fntnum32
+set2 0x4439
+set2 0x2424
+set2 0x2555
+set2 0x2521
+set2 0x2524
+set2 0x256b
+set2 0x4c3e
+fntnum7
+setchar58
+ ":"
+pop
+down3 5746684
+push
+push
+right3 298780
+xxx1 207 'PSfile="figures/go002∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ∞œ∏Î‡•€…∫¡±£ºÍ√Ã±®∫Ì ˝±ﬂ.eps" llx=0 lly=0 urx=600 ury=600 rwi=850 '
+pop
+pop
+pop
+pop
+pop
+pop
+down3 1865018
+push
+right4 14679012
+setchar49
+ "1"
+pop
+pop
+eop
+post 42 25400000 473628672 1000 46252776 29386924 7 1
+fntdef1 32 0 629800 655360 0 3 'jis'
+fntdef1 7 0x4BF16079 655360 655360 0 5 'cmr10'
+post_post 834 2 223 223 223 223 223 223 223
